@@ -1,0 +1,19 @@
+app = "playground-api"
+primary_region = "nrt"
+
+[build]
+  ignorefile = ".dockerignore"
+  dockerfile = "api.Dockerfile"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[http_service.concurrency]
+  type = "requests"
+  soft_limit = 200
+  hard_limit = 250

@@ -1,0 +1,48 @@
+version: "3.9"
+services:
+  playground-api:
+    image: playground-api
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    ports:
+      - "17001:8000"
+    volumes:
+      - ./api:/playground/api
+    environment:
+      - PLAYGROUND_APP_ENVIRONMENT=${PLAYGROUND_APP_ENVIRONMENT}
+      - PLAYGROUND_LOG_LEVEL=${PLAYGROUND_LOG_LEVEL}
+      - PLAYGROUND_MONGO_HOST=${PLAYGROUND_MONGO_HOST}
+      - PLAYGROUND_MONGO_PORT=${PLAYGROUND_MONGO_PORT}
+      - PLAYGROUND_MONGO_DB=${PLAYGROUND_MONGO_DB}
+      - PLAYGROUND_NEIS_API_KEY=${PLAYGROUND_NEIS_API_KEY}
+      - PLAYGROUND_ENABLE_CORS=${PLAYGROUND_ENABLE_CORS}
+      - PLAYGROUND_CORS_ORIGINS=${PLAYGROUND_CORS_ORIGINS}
+    depends_on:
+      mongodb:
+        condition: service_started
+  playground-web:
+    container_name: playground-web
+    ports:
+      - "17002:5173"
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+    volumes:
+      - ./web/src:/playground/web/src
+    environment:
+      - VITE_PLAYGROUND_SERVER_SIDE_API_URL=${VITE_PLAYGROUND_SERVER_SIDE_API_URL}
+      - VITE_PLAYGROUND_CLIENT_SIDE_API_URL=${VITE_PLAYGROUND_CLIENT_SIDE_API_URL}
+    depends_on:
+      playground-api:
+        condition: service_started
+  playground-proxy:
+    container_name: playground-proxy
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    ports:
+      - "17000:80"
+    depends_on:
+      - playground-api
+      - playground-web
