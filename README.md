@@ -2,6 +2,14 @@
 
 템플릿 프로젝트입니다.
 
+## 실행정보
+
+```bash
+make build
+make up
+make down
+```
+
 ## api
 
 ```bash
