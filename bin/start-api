@@ -4,7 +4,7 @@ set -e
 WORKDIR=$(dirname $(dirname $(readlink -f $0)))
 
 cd $WORKDIR
-if [[ $SHIELD_ENVIRONMENT = "prod" ]]; then
+if [[ $PLAYGROUND_APP_ENVIRONMENT = "prod" ]]; then
     WORKERS=$(nproc)
     if [[ -z $WORKERS ]]; then
         WORKERS=2
