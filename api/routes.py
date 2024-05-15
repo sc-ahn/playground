@@ -9,6 +9,7 @@ from fastapi.responses import ORJSONResponse
 
 from api.db.mongo import db
 from api.enums import SchoolType
+from api.responses import GetSchoolResponseOkay
 from api.schema import ScheduleInfo, SchoolInfo
 from api.services import get_org_list
 from api.services import get_school_list as get_school_list_from_db
@@ -73,7 +74,15 @@ async def get_org_name(
     )
 
 
-@router.get("/서울/{school_type}")
+@router.get(
+    "/서울/{school_type}",
+    status_code=200,
+    responses={
+        200: {
+            "model": GetSchoolResponseOkay,
+        }
+    },
+)
 async def get_school_list(
     school_type: Annotated[
         SchoolType,
