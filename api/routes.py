@@ -149,7 +149,7 @@ async def get_school_schedule(
                 "message": "학사일정 API를 사용하기 위해서는 NEIS API 키가 필요합니다.",
             },
         )
-
+    # TODO: refactor
     generator = db.school_info.find(
         {
             "city": {"$regex": "^서울"},
