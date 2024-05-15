@@ -1,4 +1,4 @@
-from async_lru import alru_cache
+from async_lru import alru_cache  # lru_cache for async
 
 from api.enums import SchoolType
 from api.schema import EssentialSchoolInfo
