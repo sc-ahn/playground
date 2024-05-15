@@ -2,28 +2,19 @@
 
 템플릿 프로젝트입니다.
 
+- FastAPI
+- SvelteKit
+- MongoDB
+- Nginx
+
 ## 실행정보
 
-```bash
-make build
-make up
-make down
-```
+도커 컴포즈를 이용하여 실행합니다.
 
-## api
+커맨드는 Makefile에 정의되어 있습니다.
 
 ```bash
-poetry add fastapi orjson aiohttp pydantic pydantic-settings motor uvicorn async-lru
-poetry add isort black --group dev
-poetry run uvicorn api.main:app --host 0.0.0.0 --port 8000 --workers ${WORKERS}
-```
-
-## web
-
-```bash
-nvm use v20
-npm create svelte@latest web
-cd web
-npm i -D autoprefixer postcss tailwindcss
-npm run dev -- --port 5173 --host
+make build # 빌드
+make up # 실행
+make down # 종료
 ```
